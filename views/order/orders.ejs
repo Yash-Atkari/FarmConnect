@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Orders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .order-info {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .status {
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .pending {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .completed {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .nav-links {
+      margin-top: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      margin: 5px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .dashboard-btn {
+      background-color: #007bff;
+    }
+
+    .dashboard-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your Orders</h2>
+
+    <% if (user.role === "buyer") { %>
+      <h3>My Purchases</h3>
+      <ul>
+        <% orders.forEach(order => { %>
+          <li>
+            <div class="order-info">
+              <strong>Product:</strong> <%= order.productId.name %><br>
+              <strong>Seller:</strong> <%= order.productId.farmerId %>
+            </div>
+            <span class="status <%= order.status %>"><%= order.status %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <h3>Your Sales</h3>
+      <ul>
+        <% orders.forEach(order => { %>
+          <li>
+            <div class="order-info">
+              <strong>Product:</strong> <%= order.productId.name %><br>
+              <strong>Buyer:</strong> <%= order.buyerId.username %>
+            </div>
+            <span class="status <%= order.status %>"><%= order.status %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <div class="nav-links">
+      <a href="/dashboard" class="dashboard-btn">Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

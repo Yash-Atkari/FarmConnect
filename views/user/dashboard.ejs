@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .role {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .product-list, .order-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .product-item, .order-item {
+      background: #fff;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-actions a {
+      margin-left: 10px;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .edit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .add-product-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .nav-links {
+      margin-top: 20px;
+    }
+
+    .nav-btn, .logout-btn, .order-btn {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .nav-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .order-btn {
+      background-color: #ff9800;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, <%= user.username %>!</h2>
+    <p class="role">Role: <%= user.role %></p>
+
+    <% if (user.role === "farmer") { %>
+      <h3>Your Listed Products</h3>
+      <ul class="product-list">
+        <% products.forEach(product => { %>
+          <li class="product-item">
+            <span><%= product.name %> - ₹<%= product.price %></span>
+            <div class="product-actions">
+              <a href="/products/edit/<%= product._id %>" class="edit-btn">Edit</a>
+              <a href="/products/delete/<%= product._id %>" class="delete-btn">Delete</a>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+      <a href="/products/add" class="add-product-btn">Add New Product</a>
+    <% } else { %>
+      <h3>Your Orders</h3>
+      <ul class="order-list">
+        <% orders.forEach(order => { %>
+          <li class="order-item">
+            <span>Product: <%= order.productId.name %> - Status: <%= order.status %></span>
+          </li>
+        <% }) %>
+      </ul>
+      <a href="/orders" class="order-btn">My Orders</a> <!-- Added My Orders button -->
+    <% } %>
+
+    <div class="nav-links">
+      <a href="/marketplace" class="nav-btn">Go to Marketplace</a>
+      <a href="/profile" class="nav-btn">Profile</a>
+      <a href="/auth/logout" class="logout-btn">Logout</a>
+    </div>
+  </div>
+</body>
+</html>
